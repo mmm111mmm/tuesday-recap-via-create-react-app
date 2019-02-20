@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import { Route, Switch, NavLink} from 'react-router-dom';
+
 
 class Dog extends React.Component {
     constructor(props) {
