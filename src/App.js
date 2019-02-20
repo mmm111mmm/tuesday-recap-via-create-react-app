@@ -98,15 +98,29 @@ class Playtime extends React.Component {
     }
 }
 
+class Dogs extends React.Component {
+    render() {
+        return (
+            <div>
+                <Dog name="Kira" colour="brown and white" />
+                <Dog name="Tess" colour="gray" />
+            </div>
+        )
+    }
+}
+
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
-          <h3>Dogs</h3>
-          <Dog name="Kira" colour="brown and white"/>
-          <Dog name="Tess" colour="gray" />
-          <h3>Play with dogs!</h3>
-          <Playtime />
+      <div>
+        <div>
+            <NavLink exact to="/" activeStyle={{fontWeight: 'bold'}}>Dogs</NavLink>            
+            <NavLink to="/playtime" activeStyle={{fontWeight: 'bold'}}>Playtime</NavLink>            
+        </div>
+        <Switch>
+            <Route exact path='/' component={Dogs}/>
+            <Route path='/playtime' component={Playtime}/>
+        </Switch>        
       </div>
     );
   }
