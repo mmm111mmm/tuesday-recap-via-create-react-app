@@ -38,34 +38,26 @@ class Playtime extends React.Component {
         super(props)
         this.state = {
             treats: [],
-            freeformTreat: "",
-            currentTreatFromSelect: ""
+            inputtedTreat: "",
+            treatFromSelect: ""
         }
     }
 
-    selectChangeCurrentTreat = (e) => {
-        if(e.target.value==="") return
-        this.state.treats.push(e.target.value)
+    handleInput = (e) => {
         this.setState({
-            treats: this.state.treats
-        })           
+            [e.target.name]: e.target.value
+        })
     }
 
     selectSubmitTreat = (e) => {
-        this.state.treats.push(this.state.currentTreatFromSelect)
+        this.state.treats.push(this.state.treatFromSelect)
         this.setState({
             treats: this.state.treats
         })        
     }
 
-    inputChangeCurrentTreat = (e) => {
-        this.setState({
-            freeformTreat: e.target.value
-        })
-    }
-
     inputSubmitTreat = (e) => {
-        this.state.treats.push(this.state.freeformTreat)
+        this.state.treats.push(this.state.inputtedTreat)
         this.setState({
             treats: this.state.treats
         })        
@@ -80,17 +72,21 @@ class Playtime extends React.Component {
                 <ul>
                     {treats}
                 </ul>
-                <select value={this.state.treatFromSelect} onChange={this.selectChangeCurrentTreat}>
-                    <option value="">==Choose treat==</option>
+
+                <select name="treatFromSelect" value={this.state.treatFromSelect} onChange={this.handleInput}>
                     <option value="stroke">Stroke lovingly</option>
                     <option value="ball">Play ball</option>
                     <option value="orange">Give orange</option>
                 </select>  
+                <button onClick={this.selectSubmitTreat}>give</button>
+
                 <br />
                 <br />
-                <input name="freeformTreat" value={this.state.freeformTreat} onChange={this.inputChangeCurrentTreat}/>
+
+                <input name="inputtedTreat" value={this.state.inputtedTreat} onChange={this.handleInput}/>
                 <button onClick={this.inputSubmitTreat}>give</button>
                 <br />
+
                 { this.state.treats[this.state.treats.length-1] === "orange" 
                   ?  <h1>ORANGES!!!!</h1>
                   : <div></div>
