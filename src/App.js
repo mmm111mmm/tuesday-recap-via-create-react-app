@@ -11,7 +11,8 @@ class Dog extends React.Component {
     }
     feed() {
         this.setState({
-            hungry: "no"
+            hungry: "no",
+            freeformTreat: ""
         })
     }
     render() {
@@ -34,15 +35,40 @@ class Playtime extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            treats: []
+            treats: [],
+            freeformTreat: "",
+            currentTreatFromSelect: ""
         }
     }
-    giveTreat = (treat) => {
-        this.state.treats.push(treat)
+
+    selectChangeCurrentTreat = (e) => {
+        if(e.target.value==="") return
+        this.state.treats.push(e.target.value)
         this.setState({
             treats: this.state.treats
+        })           
+    }
+
+    selectSubmitTreat = (e) => {
+        this.state.treats.push(this.state.currentTreatFromSelect)
+        this.setState({
+            treats: this.state.treats
+        })        
+    }
+
+    inputChangeCurrentTreat = (e) => {
+        this.setState({
+            freeformTreat: e.target.value
         })
     }
+
+    inputSubmitTreat = (e) => {
+        this.state.treats.push(this.state.freeformTreat)
+        this.setState({
+            treats: this.state.treats
+        })        
+    }
+
     render() {
         var treats = this.state.treats.map(function(item, i) {
             return <li key={item+i}>{item}</li>
@@ -52,15 +78,17 @@ class Playtime extends React.Component {
                 <ul>
                     {treats}
                 </ul>
-                <button onClick={() => this.giveTreat("stroke")}>
-                    stroke lovingly
-                </button>
-                <button onClick={() => this.giveTreat("ball")}>
-                    play ball
-                </button>
-                <button onClick={() => this.giveTreat("orange")}>
-                    give orange
-                </button>
+                <select value={this.state.treatFromSelect} onChange={this.selectChangeCurrentTreat}>
+                    <option value="">==Choose treat==</option>
+                    <option value="stroke">Stroke lovingly</option>
+                    <option value="ball">Play ball</option>
+                    <option value="orange">Give orange</option>
+                </select>  
+                <br />
+                <br />
+                <input name="freeformTreat" value={this.state.freeformTreat} onChange={this.inputChangeCurrentTreat}/>
+                <button onClick={this.inputSubmitTreat}>give</button>
+                <br />
                 { this.state.treats[this.state.treats.length-1] === "orange" 
                   ?  <h1>ORANGES!!!!</h1>
                   : <div></div>
@@ -76,7 +104,7 @@ class App extends React.Component {
       <div className="App">
           <h3>Dogs</h3>
           <Dog name="Kira" colour="brown and white"/>
-          <Dog name="Tess" colour="grey" />
+          <Dog name="Tess" colour="gray" />
           <h3>Play with dogs!</h3>
           <Playtime />
       </div>
